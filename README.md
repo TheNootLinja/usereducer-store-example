@@ -1,0 +1,3 @@
+# useReducer Hook Store Example
+
+While building my gatsby ecommerce project site I realized I needed to use the useContext and useReducer hooks for handling global state for things like the cart. To ensure that I have an understanding of these 2 hooks so that I am not just copying code I find online and instead actually write the code myself, I previously did a theme example using the useContext hook (which can also be seen in my repos) and now am doing this store example from a tutorial online by DesignCode where I am using the useReducer to handle my global state for an ecommerce site which means I should definitely have a good idea of how to write similar code for my project after this.
