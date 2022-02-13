@@ -2,15 +2,15 @@ import { createContext, useReducer, useContext } from 'react'
 import shopReducer, { initialState } from './ShopReducer'
 
 // Defining shop context
-const ShopContext = createContext(initialState)
+const ShopContext = createContext(initialState);
 
 const useShop = () => {
-  const context = useContext(ShopContext)
+  const context = useContext(ShopContext);
   if(context === undefined) {
-    throw new Error("useShop must be used within ShopContext")
+    throw new Error("useShop must be used within ShopContext");
   }
 
-  return context
+  return context;
 }
 
 // Defining shop provider
@@ -20,7 +20,7 @@ export const ShopProvider = ({ children }) => {
   // as the reducer and initialState passed as the initial state.
   const [state, dispatch] = useReducer(shopReducer, initialState)
 
-  // Defining add to cart action and passing in the product
+  // Defining addToCart action and passing product
   const addToCart = (product) => {
     // Storing value of adding new product to the products state.
     const updatedCart = state.products.concat(product)
@@ -40,12 +40,16 @@ export const ShopProvider = ({ children }) => {
     })
   }
 
+  // Defining the removeFromCart action and passing product
   const removeFromCart = (product) => {
+    // Filtering the given product from the cart state and
+    // saving the value in updatedCart variable
     const updatedCart = state.products.filter(
       (currentProduct) => currentProduct.name !== product.name
     )
+    // Calculating the total based on the updated cart
     updatePrice(updatedCart);
-    
+    // Setting up state dispatch with updatedCart as payload
     dispatch({
       type: "REMOVE_FROM_CART",
       payload: {
@@ -54,10 +58,13 @@ export const ShopProvider = ({ children }) => {
     })
   }
 
+  // Defining the updatePrice action and passing product
   const updatePrice = (products) => {
+    // Setting up total
     let total = 0;
+    // Going through products in cart and adding cost to total
     products.forEach((product) => (total += product.price))
-
+    // Setting up state dispatch with total as payload
     dispatch({
       type: "UPDATE_PRICE",
       payload: {
@@ -66,6 +73,7 @@ export const ShopProvider = ({ children }) => {
     })
   }
 
+  // Constructing the value to be passed to provider
   const value = {
     total: state.total,
     products: state.products,
